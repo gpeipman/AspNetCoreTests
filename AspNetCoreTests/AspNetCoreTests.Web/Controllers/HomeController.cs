@@ -16,7 +16,12 @@ namespace AspNetCoreTests.Web.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+
+            return View("PublicIndex");
         }
 
         public IActionResult Privacy()
