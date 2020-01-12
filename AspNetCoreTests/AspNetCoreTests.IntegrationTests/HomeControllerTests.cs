@@ -1,3 +1,5 @@
+using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -15,7 +17,11 @@ namespace AspNetCoreTests.IntegrationTests
         public async Task Get_EndpointsReturnSuccessAndCorrectContentType(string url)
         {
             // Arrange
-            var client = Factory.CreateClientWithTestAuth();
+            var client = Factory.CreateClientWithTestAuth(new[] {
+                new Claim(ClaimTypes.Name, "Gunnar"),
+                new Claim(ClaimTypes.Role, "Admin"),
+                new Claim(ClaimTypes.NameIdentifier, Guid.NewGuid().ToString())
+            });
 
             // Act
             var response = await client.GetAsync(url);
