@@ -11,5 +11,7 @@ namespace AspNetCoreTests.IntegrationTests
         {
             Factory = factory;            
         }
+
+        // Add you helper methods here
     }
 }
