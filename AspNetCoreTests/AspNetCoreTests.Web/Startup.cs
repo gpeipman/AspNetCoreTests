@@ -25,6 +25,9 @@ namespace AspNetCoreTests.Web
                 options.UseSqlite("Data Source=mydb.db");
             });
 
+            services.AddAuthentication();
+            services.AddAuthorization();
+
             services.AddControllersWithViews();
 
             services.AddScoped<ICustomerService, CustomerService>();
@@ -43,6 +46,7 @@ namespace AspNetCoreTests.Web
 
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
