@@ -18,6 +18,7 @@ namespace AspNetCoreTests.Web.Controllers
             return View("PublicIndex");
         }
 
+        [AllowAnonymous]
         public IActionResult Privacy()
         {
             return View();
