@@ -17,11 +17,7 @@ namespace AspNetCoreTests.IntegrationTests
         public async Task Get_EndpointsReturnSuccessAndCorrectContentType(string url)
         {
             // Arrange
-            var client = Factory.CreateClientWithTestAuth(new[] {
-                new Claim(ClaimTypes.Name, "Gunnar"),
-                new Claim(ClaimTypes.Role, "Admin"),
-                new Claim(ClaimTypes.NameIdentifier, Guid.NewGuid().ToString())
-            });
+            var client = Factory.CreateClientWithTestAuth(TestClaimsProvider.WithAdminClaims());
 
             // Act
             var response = await client.GetAsync(url);
