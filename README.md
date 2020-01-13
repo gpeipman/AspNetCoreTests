@@ -21,10 +21,12 @@ dotnet tool install dotnet-reportgenerator-globaltool --tool-path tools
 ## Integration tests
 
 Although there are simpler ways to get started with ASP.NET Core integration tests, the approach here is more 
-flexible:
+flexible. Integration test examples have these important features:
 
 * Use custom appsettings.json file for integration tests
 * Use custom web application startup class
+* Faking authenticated and authorized user
+* Support for multiple faked user accounts and roles
 
 ## References
 
@@ -33,4 +35,4 @@ flexible:
 * [Using custom appsettings.json with ASP.NET Core integration tests](https://gunnarpeipman.com/aspnet-core-integration-tests-appsettings/)
 * [Using custom startup class with ASP.NET Core integration tests](https://gunnarpeipman.com/aspnet-core-integration-test-startup/)
 * [Faking Azure AD identity in ASP.NET Core unit tests](https://gunnarpeipman.com/aspnet-core-azure-ad-unit-test/)
-* Faking user in ASP.NET Core controller tests
+* [Create fake user for ASP.NET Core controller tests](https://gunnarpeipman.com/aspnet-core-test-controller-fake-user/)
