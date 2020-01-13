@@ -5,6 +5,7 @@ using Xunit;
 
 namespace AspNetCoreTests.IntegrationTests
 {
+    [Collection("Serialize")]
     public class CustomerControllerTests : TestBase
     {
         public CustomerControllerTests(TestApplicationFactory<FakeStartup> factory) : base(factory)

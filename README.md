@@ -31,6 +31,7 @@ flexible. Integration test examples have these important features:
 * Use custom web application startup class
 * Faking authenticated and authorized user
 * Support for multiple faked user accounts and roles
+* Testing with users in different roles
 
 ## References
 

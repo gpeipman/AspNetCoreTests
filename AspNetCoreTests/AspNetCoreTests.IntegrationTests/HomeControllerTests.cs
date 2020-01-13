@@ -1,10 +1,9 @@
-using System;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace AspNetCoreTests.IntegrationTests
 {
+    [Collection("Serialize")]
     public class HomeControllerTests : TestBase
     {
         public HomeControllerTests(TestApplicationFactory<FakeStartup> factory) : base(factory)
