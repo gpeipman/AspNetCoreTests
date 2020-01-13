@@ -1,7 +1,9 @@
 using AspNetCoreTests.Web.Data;
 using AspNetCoreTests.Web.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,12 +24,18 @@ namespace AspNetCoreTests.Web
         {
             services.AddDbContext<DemoDbContext>(options =>
             {
-                options.UseSqlite("Data Source=mydb.db");
+                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddAuthentication();
-            services.AddAuthorization();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
+                        options =>
+                        {
+                            options.LoginPath = new PathString("/auth/login");
+                            options.AccessDeniedPath = new PathString("/auth/denied");
+                        });
 
+            services.AddAuthorization();
             services.AddControllersWithViews();
 
             services.AddScoped<ICustomerService, CustomerService>();

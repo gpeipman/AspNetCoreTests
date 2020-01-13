@@ -28,12 +28,17 @@ namespace AspNetCoreTests.IntegrationTests
                     throw new NullReferenceException("Cannot get instance of dbContext");
                 }
 
-                if (dbContext.Database.GetDbConnection().ConnectionString.ToLower().Contains("database.windows.net"))
+                if (dbContext.Database.GetDbConnection().ConnectionString.ToLower().Contains("live.db"))
                 {
                     throw new Exception("LIVE SETTINGS IN TESTS!");
                 }
 
-                // Initialize database
+                dbContext.Database.EnsureDeleted();
+                dbContext.Database.EnsureCreated();
+
+                dbContext.Customers.Add(new Customer { Id = 1, Name = "Customer 1" });
+                dbContext.Customers.Add(new Customer { Id = 2, Name = "Customer 2" });
+                dbContext.SaveChanges();
             }
         }
     }

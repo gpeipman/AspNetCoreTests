@@ -1,5 +1,8 @@
-﻿namespace AspNetCoreTests.Web.Models
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace AspNetCoreTests.Web.Models
 {
+    [ExcludeFromCodeCoverage]
     public class CustomerModel
     {
         public int Id { get; set; }

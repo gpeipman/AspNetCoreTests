@@ -10,7 +10,11 @@ Unit tests project demonstrates the following features:
 * Unit testing controllers
     * Checking if correct view is returned
     * Faking current user correctly
+* Unit testing service classes
+* Using EF Core in-memory database for unit tests
 * Script to generate and display code coverage reports
+    * run-tests.bat file runs tests and code coverage analytics
+    * Look inside model classes to see how leave code out from coverage analysis
 
 NB! You need to install report generator manually. Open unit tests project folder in command line and type the following command: 
 
@@ -31,8 +35,10 @@ flexible. Integration test examples have these important features:
 ## References
 
 * [Using xUnit with ASP.NET Core](https://gunnarpeipman.com/aspnet-core-xunit/)
+* [Create fake user for ASP.NET Core controller tests](https://gunnarpeipman.com/aspnet-core-test-controller-fake-user/)
+* [How to exclude code from code coverage](https://gunnarpeipman.com/aspnet-core-exclude-code-coverage/)
+* [Using Entity Framework Core in-memory database for unit testing](https://gunnarpeipman.com/aspnet-core-ef-inmemory-database/)
 * [Code coverage reports for ASP.NET Core](https://gunnarpeipman.com/aspnet-core-code-coverage/)
 * [Using custom appsettings.json with ASP.NET Core integration tests](https://gunnarpeipman.com/aspnet-core-integration-tests-appsettings/)
 * [Using custom startup class with ASP.NET Core integration tests](https://gunnarpeipman.com/aspnet-core-integration-test-startup/)
 * [Faking Azure AD identity in ASP.NET Core unit tests](https://gunnarpeipman.com/aspnet-core-azure-ad-unit-test/)
-* [Create fake user for ASP.NET Core controller tests](https://gunnarpeipman.com/aspnet-core-test-controller-fake-user/)
