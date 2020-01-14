@@ -43,3 +43,4 @@ flexible. Integration test examples have these important features:
 * [Using custom appsettings.json with ASP.NET Core integration tests](https://gunnarpeipman.com/aspnet-core-integration-tests-appsettings/)
 * [Using custom startup class with ASP.NET Core integration tests](https://gunnarpeipman.com/aspnet-core-integration-test-startup/)
 * [Faking Azure AD identity in ASP.NET Core unit tests](https://gunnarpeipman.com/aspnet-core-azure-ad-unit-test/)
+* [Create fake user for ASP.NET Core integration tests](https://gunnarpeipman.com/aspnet-core-integration-test-fake-user/)
