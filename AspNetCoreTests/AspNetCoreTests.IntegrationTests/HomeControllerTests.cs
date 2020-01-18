@@ -3,7 +3,7 @@ using Xunit;
 
 namespace AspNetCoreTests.IntegrationTests
 {
-    [Collection("Serialize")]
+    [Collection("Sequential")]
     public class HomeControllerTests : TestBase
     {
         public HomeControllerTests(TestApplicationFactory<FakeStartup> factory) : base(factory)
