@@ -37,5 +37,22 @@ namespace AspNetCoreTests.Web.Controllers
 
             return View(model);
         }
+
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+
+            var model = await _customerService.GetCustomer(id.Value);
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            return View(model);
+        }
     }
 }

@@ -5,6 +5,7 @@ using Xunit;
 
 namespace AspNetCoreTests.IntegrationTests
 {
+    [Collection("Sequential")]
     public class CustomerControllerTests : TestBase
     {
         public CustomerControllerTests(TestApplicationFactory<FakeStartup> factory) : base(factory)
@@ -15,6 +16,8 @@ namespace AspNetCoreTests.IntegrationTests
         [InlineData("/Customers")]
         [InlineData("/Customers/Details")]
         [InlineData("/Customers/Details/1")]
+        [InlineData("/Customers/Edit")]
+        [InlineData("/Customers/Edit/1")]
         public async Task Get_EndpointsReturnFailToAnonymousUserForRestrictedUrls(string url)
         {
             // Arrange
@@ -42,15 +45,31 @@ namespace AspNetCoreTests.IntegrationTests
         }
 
         [Theory]
-        [InlineData("/Customers/Details")]
-        public async Task Get_DetailsWithNoIdReturnsBadSuccessForRegularUser(string url)
+        [InlineData("/Customers/Edit/")]
+        [InlineData("/Customers/Edit/1")]
+        public async Task Get_EditReturnsFailToRegularUser(string url)
         {
             var provider = TestClaimsProvider.WithUserClaims();
             var client = Factory.CreateClientWithTestAuth(provider);
 
             var response = await client.GetAsync(url);
 
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
+        }
+
+        [Theory]
+        [InlineData("/Customers")]
+        [InlineData("/Customers/Details/1")]
+        [InlineData("/Customers/Edit/1")]
+        public async Task Get_EndPointsReturnsSuccessForAdmin(string url)
+        {
+            var provider = TestClaimsProvider.WithAdminClaims();
+            var client = Factory.CreateClientWithTestAuth(provider);
+
+            var response = await client.GetAsync(url);
+
+            response.EnsureSuccessStatusCode();
+            Assert.Equal("text/html; charset=utf-8", response.Content.Headers.ContentType.ToString());
         }
     }
 }
