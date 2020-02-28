@@ -24,10 +24,14 @@ namespace AspNetCoreTests.IntegrationTests
             var client = Factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
 
             // Act
-            var response = await client.GetAsync(url);
+            var response = await client.GetAsync(url);            
 
             // Assert
             Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);
+
+            var redirectUrl = response.Headers.Location.LocalPath;
+            Assert.Equal("/auth/login", redirectUrl);
+            
         }
 
         [Theory]
