@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
@@ -30,8 +32,29 @@ namespace AspNetCoreTests.IntegrationTests
             Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);
 
             var redirectUrl = response.Headers.Location.LocalPath;
-            Assert.Equal("/auth/login", redirectUrl);
-            
+            Assert.Equal("/auth/login", redirectUrl);            
+        }
+
+        [Fact]
+        public async Task Edit_EndpointReturnSuccessForCorrectModel()
+        {
+            // Arrange
+            var claimsProvider = TestClaimsProvider.WithAdminClaims();
+            var client = Factory.CreateClientWithTestAuth(claimsProvider);
+
+            var formValues = new Dictionary<string, string>();
+            formValues.Add("Id", "121");
+            formValues.Add("Address", "Hobujaama 1");
+            formValues.Add("Name", "John Smith");
+            formValues.Add("Email", "john@example.com");
+
+            var content = new FormUrlEncodedContent(formValues);
+
+            // Act
+            var response = await client.PostAsync("/Customers/Edit", content);
+
+            // Assert
+            Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);
         }
 
         [Theory]

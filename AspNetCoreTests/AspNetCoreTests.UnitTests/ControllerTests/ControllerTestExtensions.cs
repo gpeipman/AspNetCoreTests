@@ -12,8 +12,8 @@ namespace AspNetCoreTests.UnitTests.ControllerTests
 
             var principal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
                             {
-                                    new Claim(ClaimTypes.NameIdentifier, "SomeValueHere"),
-                                    new Claim(ClaimTypes.Name, "gunnar@somecompany.com")
+                                    new Claim(ClaimTypes.NameIdentifier, nameIdentifier),
+                                    new Claim(ClaimTypes.Name, name)
                                     // other required and custom claims
                             }, "TestAuthentication"));
 

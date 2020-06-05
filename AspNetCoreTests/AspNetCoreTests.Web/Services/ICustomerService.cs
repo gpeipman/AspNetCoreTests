@@ -8,5 +8,6 @@ namespace AspNetCoreTests.Web.Services
     {
         Task<IList<CustomerModel>> List();
         Task<CustomerModel> GetCustomer(int id);
+
     }
 }

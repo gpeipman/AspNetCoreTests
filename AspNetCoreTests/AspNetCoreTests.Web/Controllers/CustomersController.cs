@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using AspNetCoreTests.Web.Models;
 using AspNetCoreTests.Web.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -39,6 +40,7 @@ namespace AspNetCoreTests.Web.Controllers
         }
 
         [Authorize(Roles = "Admin")]
+        [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -53,6 +55,18 @@ namespace AspNetCoreTests.Web.Controllers
             }
 
             return View(model);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult Edit(CustomerModel model)
+        {
+            if(model == null)
+            {
+                return BadRequest();
+            }
+
+            return View();
         }
     }
 }

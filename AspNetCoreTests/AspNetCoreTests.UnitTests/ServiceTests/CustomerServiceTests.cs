@@ -13,7 +13,7 @@ namespace AspNetCoreTests.UnitTests.ServiceTests
         [Fact]
         public async Task List_should_return_list_of_customers()
         {
-            var dbContext = GetDbContext();
+            using var dbContext = GetDbContext();
             dbContext.Customers.Add(new Customer { Id = 1, Name = "Company 1" });
             dbContext.Customers.Add(new Customer { Id = 2, Name = "Company 2" });
             await dbContext.SaveChangesAsync();
@@ -28,7 +28,7 @@ namespace AspNetCoreTests.UnitTests.ServiceTests
         [Fact]
         public async Task GetCustomer_should_return_null_for_missing_customer()
         {
-            var dbContext = GetDbContext();
+            using var dbContext = GetDbContext();
             var id = -1;
 
             var service = new CustomerService(dbContext);
@@ -41,7 +41,7 @@ namespace AspNetCoreTests.UnitTests.ServiceTests
         public async Task GetCustomer_should_return_model_for_existing_customer()
         {
             var id = 1;
-            var dbContext = GetDbContext();
+            using var dbContext = GetDbContext();
             dbContext.Customers.Add(new Customer { Id = 1, Name = "Company 1" });
             dbContext.Customers.Add(new Customer { Id = 2, Name = "Company 2" });
             await dbContext.SaveChangesAsync();
