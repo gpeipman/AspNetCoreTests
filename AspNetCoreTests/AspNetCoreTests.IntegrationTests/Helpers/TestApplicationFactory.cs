@@ -8,21 +8,6 @@ namespace AspNetCoreTests.IntegrationTests
 {
     public class TestApplicationFactory<TStartup, TTestStartup> : WebApplicationFactory<TTestStartup> where TTestStartup : class
     {
-        //protected override IWebHostBuilder CreateWebHostBuilder()
-        //{
-        //    var host = WebHost.CreateDefaultBuilder(null)
-        //                      .UseStartup<TEntryPoint>()
-        //                      .UseSolutionRelativeContentRoot("AspNetCoreTests.Web")
-        //                      .ConfigureAppConfiguration((context, conf) =>
-        //                      {
-        //                          var projectDir = Directory.GetCurrentDirectory();
-        //                          var configPath = Path.Combine(projectDir, "appsettings.json");
-
-        //                          conf.AddJsonFile(configPath);
-        //                      });
-        //    return host;
-        //}
-
         protected override IHostBuilder CreateHostBuilder()
         {
             var host = Host.CreateDefaultBuilder()
