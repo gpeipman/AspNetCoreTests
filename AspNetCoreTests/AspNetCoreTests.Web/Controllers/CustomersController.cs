@@ -66,7 +66,9 @@ namespace AspNetCoreTests.Web.Controllers
                 return BadRequest();
             }
 
-            return View();
+            // Save customer data
+
+            return RedirectToAction(nameof(CustomersController.Index));
         }
     }
 }

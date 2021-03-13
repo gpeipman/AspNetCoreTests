@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
+﻿using AspNetCoreTests.Web;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
 
 namespace AspNetCoreTests.IntegrationTests
 {
-    public abstract class TestBase : IClassFixture<TestApplicationFactory<FakeStartup>>
+    public abstract class TestBase : IClassFixture<TestApplicationFactory<Startup, FakeStartup>>
     {
         protected WebApplicationFactory<FakeStartup> Factory { get; }
 
-        public TestBase(TestApplicationFactory<FakeStartup> factory)
+        public TestBase(TestApplicationFactory<Startup, FakeStartup> factory)
         {
             Factory = factory;            
         }

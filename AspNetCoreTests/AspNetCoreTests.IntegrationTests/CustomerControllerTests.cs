@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using AspNetCoreTests.Web;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
 
@@ -10,7 +11,7 @@ namespace AspNetCoreTests.IntegrationTests
     [Collection("Sequential")]
     public class CustomerControllerTests : TestBase
     {
-        public CustomerControllerTests(TestApplicationFactory<FakeStartup> factory) : base(factory)
+        public CustomerControllerTests(TestApplicationFactory<Startup,FakeStartup> factory) : base(factory)
         {
         }
 

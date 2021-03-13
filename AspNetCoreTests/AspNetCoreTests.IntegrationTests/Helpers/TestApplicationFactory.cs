@@ -1,26 +1,44 @@
 ﻿using System.IO;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 
 namespace AspNetCoreTests.IntegrationTests
 {
-    public class TestApplicationFactory<TEntryPoint> : WebApplicationFactory<TEntryPoint> where TEntryPoint : class
+    public class TestApplicationFactory<TStartup, TTestStartup> : WebApplicationFactory<TTestStartup> where TTestStartup : class
     {
-        protected override IWebHostBuilder CreateWebHostBuilder()
-        {
-            return WebHost.CreateDefaultBuilder(null)
-                          .UseStartup<TEntryPoint>()
-                          .UseSolutionRelativeContentRoot("AspNetCoreTests.Web")
-                          .ConfigureAppConfiguration((context, conf) =>
-                          {
-                              var projectDir = Directory.GetCurrentDirectory();
-                              var configPath = Path.Combine(projectDir, "appsettings.json");
+        //protected override IWebHostBuilder CreateWebHostBuilder()
+        //{
+        //    var host = WebHost.CreateDefaultBuilder(null)
+        //                      .UseStartup<TEntryPoint>()
+        //                      .UseSolutionRelativeContentRoot("AspNetCoreTests.Web")
+        //                      .ConfigureAppConfiguration((context, conf) =>
+        //                      {
+        //                          var projectDir = Directory.GetCurrentDirectory();
+        //                          var configPath = Path.Combine(projectDir, "appsettings.json");
 
-                              conf.AddJsonFile(configPath);
-                          });
+        //                          conf.AddJsonFile(configPath);
+        //                      });
+        //    return host;
+        //}
+
+        protected override IHostBuilder CreateHostBuilder()
+        {
+            var host = Host.CreateDefaultBuilder()
+                            .ConfigureWebHost(builder =>
+                            {
+                                builder.UseStartup<TTestStartup>();
+                            })
+                            .ConfigureAppConfiguration((context, conf) =>
+                            {
+                                var projectDir = Directory.GetCurrentDirectory();
+                                var configPath = Path.Combine(projectDir, "appsettings.json");
+
+                                conf.AddJsonFile(configPath);
+                            });
+
+            return host;
         }
     }
 }

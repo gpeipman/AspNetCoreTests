@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using AspNetCoreTests.Web;
 using Xunit;
 
 namespace AspNetCoreTests.IntegrationTests
@@ -6,7 +7,7 @@ namespace AspNetCoreTests.IntegrationTests
     [Collection("Sequential")]
     public class HomeControllerTests : TestBase
     {
-        public HomeControllerTests(TestApplicationFactory<FakeStartup> factory) : base(factory)
+        public HomeControllerTests(TestApplicationFactory<Startup, FakeStartup> factory) : base(factory)
         {
         }
 

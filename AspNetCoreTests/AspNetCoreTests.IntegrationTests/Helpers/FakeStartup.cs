@@ -1,23 +1,60 @@
 ﻿using System;
-using AspNetCoreTests.Web;
 using AspNetCoreTests.Web.Data;
+using AspNetCoreTests.Web.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AspNetCoreTests.IntegrationTests
 {
-    public class FakeStartup : Startup
+    public class FakeStartup //: Startup
     {
-        public FakeStartup(IConfiguration configuration) : base(configuration)
+        public FakeStartup(IConfiguration configuration)
         {
+            Configuration = configuration;
         }
 
-        public override void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public IConfiguration Configuration { get; }
+
+        public virtual void ConfigureServices(IServiceCollection services)
         {
-            base.Configure(app, env);
+            services.AddDbContext<DemoDbContext>(options =>
+            {
+                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+            });
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
+                        options =>
+                        {
+                            options.LoginPath = new PathString("/auth/login");
+                            options.AccessDeniedPath = new PathString("/auth/denied");
+                        });
+
+            services.AddAuthorization();
+            services.AddControllersWithViews();
+
+            services.AddScoped<ICustomerService, CustomerService>();
+        }
+        
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            app.UseStaticFiles();
+            app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
 
             var serviceScopeFactory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
             using (var serviceScope = serviceScopeFactory.CreateScope())
