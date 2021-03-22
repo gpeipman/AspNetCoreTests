@@ -19,7 +19,7 @@ namespace AspNetCoreTests.IntegrationTests
             // Arrange
             var claimsProvider = TestClaimsProvider.WithAdminClaims();
             var client = Factory.CreateClientWithTestAuth(claimsProvider);
-
+            
             // Act
             var response = await client.GetAsync(url);
 

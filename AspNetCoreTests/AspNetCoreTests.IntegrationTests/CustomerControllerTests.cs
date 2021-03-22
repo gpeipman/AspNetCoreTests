@@ -27,12 +27,11 @@ namespace AspNetCoreTests.IntegrationTests
             var client = Factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
 
             // Act
-            var response = await client.GetAsync(url);            
+            var response = await client.GetAsync(url);
+            var redirectUrl = response.Headers.Location.LocalPath;
 
             // Assert
-            Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);
-
-            var redirectUrl = response.Headers.Location.LocalPath;
+            Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);            
             Assert.Equal("/auth/login", redirectUrl);            
         }
 
@@ -63,11 +62,14 @@ namespace AspNetCoreTests.IntegrationTests
         [InlineData("/Customers/Details/1")]
         public async Task Get_EndPointsReturnsSuccessForRegularUser(string url)
         {
+            // Arrange
             var provider = TestClaimsProvider.WithUserClaims();
             var client = Factory.CreateClientWithTestAuth(provider);
 
+            // Act
             var response = await client.GetAsync(url);
 
+            // Assert
             response.EnsureSuccessStatusCode();
             Assert.Equal("text/html; charset=utf-8", response.Content.Headers.ContentType.ToString());
         }
@@ -77,11 +79,14 @@ namespace AspNetCoreTests.IntegrationTests
         [InlineData("/Customers/Edit/1")]
         public async Task Get_EditReturnsFailToRegularUser(string url)
         {
+            // Arrange
             var provider = TestClaimsProvider.WithUserClaims();
             var client = Factory.CreateClientWithTestAuth(provider);
 
+            // Act
             var response = await client.GetAsync(url);
 
+            // Assert
             Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
         }
 
@@ -91,11 +96,14 @@ namespace AspNetCoreTests.IntegrationTests
         [InlineData("/Customers/Edit/1")]
         public async Task Get_EndPointsReturnsSuccessForAdmin(string url)
         {
+            // Arrange
             var provider = TestClaimsProvider.WithAdminClaims();
             var client = Factory.CreateClientWithTestAuth(provider);
 
+            // Act
             var response = await client.GetAsync(url);
 
+            // Assert
             response.EnsureSuccessStatusCode();
             Assert.Equal("text/html; charset=utf-8", response.Content.Headers.ContentType.ToString());
         }

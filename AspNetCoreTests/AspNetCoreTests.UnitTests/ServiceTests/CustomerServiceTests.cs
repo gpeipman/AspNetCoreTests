@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AspNetCoreTests.Web.Data;
 using AspNetCoreTests.Web.Services;
 using Xunit;
@@ -13,14 +10,17 @@ namespace AspNetCoreTests.UnitTests.ServiceTests
         [Fact]
         public async Task List_should_return_list_of_customers()
         {
+            // Arrange
             using var dbContext = GetDbContext();
             dbContext.Customers.Add(new Customer { Id = 1, Name = "Company 1" });
             dbContext.Customers.Add(new Customer { Id = 2, Name = "Company 2" });
             await dbContext.SaveChangesAsync();
 
+            // Act
             var service = new CustomerService(dbContext);
             var result = await service.List();
 
+            // Assert
             Assert.NotNull(result);
             Assert.Equal(2, result.Count);
         }
