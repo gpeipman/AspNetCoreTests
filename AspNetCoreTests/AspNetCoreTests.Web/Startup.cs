@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,15 +30,19 @@ namespace AspNetCoreTests.Web
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
-                        options =>
-                        {
-                            options.LoginPath = new PathString("/auth/login");
-                            options.AccessDeniedPath = new PathString("/auth/denied");
-                        });
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                    .AddEntityFrameworkStores<DemoDbContext>();
+
+            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            //        .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
+            //            options =>
+            //            {
+            //                options.LoginPath = new PathString("/auth/login");
+            //                options.AccessDeniedPath = new PathString("/auth/denied");
+            //            });
 
             services.AddAuthorization();
+            services.AddRazorPages();
             services.AddControllersWithViews();
 
             services.AddScoped<ICustomerService, CustomerService>();
@@ -65,6 +70,7 @@ namespace AspNetCoreTests.Web
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }

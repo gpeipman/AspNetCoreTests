@@ -24,10 +24,10 @@ namespace AspNetCoreTests.IntegrationTests
         public async Task Get_EndpointsReturnFailToAnonymousUserForRestrictedUrls(string url)
         {
             // Arrange
-            var client = Factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
+            using var client = Factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
 
             // Act
-            var response = await client.GetAsync(url);
+            using var response = await client.GetAsync(url);
             var redirectUrl = response.Headers.Location.LocalPath;
 
             // Assert
@@ -40,19 +40,19 @@ namespace AspNetCoreTests.IntegrationTests
         {
             // Arrange
             var claimsProvider = TestClaimsProvider.WithAdminClaims();
-            var client = Factory.CreateClientWithTestAuth(claimsProvider);
-
+            using var client = Factory.CreateClientWithTestAuth(claimsProvider);
+            
             var formValues = new Dictionary<string, string>();
             formValues.Add("Id", "121");
             formValues.Add("Address", "Hobujaama 1");
             formValues.Add("Name", "John Smith");
             formValues.Add("Email", "john@example.com");
-
-            var content = new FormUrlEncodedContent(formValues);
+            
+            using var content = new FormUrlEncodedContent(formValues);
 
             // Act
-            var response = await client.PostAsync("/Customers/Edit", content);
-
+            using var response = await client.PostAsync("/Customers/Edit", content);
+            
             // Assert
             Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);
         }
@@ -64,10 +64,10 @@ namespace AspNetCoreTests.IntegrationTests
         {
             // Arrange
             var provider = TestClaimsProvider.WithUserClaims();
-            var client = Factory.CreateClientWithTestAuth(provider);
+            using var client = Factory.CreateClientWithTestAuth(provider);
 
             // Act
-            var response = await client.GetAsync(url);
+            using var response = await client.GetAsync(url);
 
             // Assert
             response.EnsureSuccessStatusCode();
@@ -81,10 +81,10 @@ namespace AspNetCoreTests.IntegrationTests
         {
             // Arrange
             var provider = TestClaimsProvider.WithUserClaims();
-            var client = Factory.CreateClientWithTestAuth(provider);
+            using var client = Factory.CreateClientWithTestAuth(provider);
 
             // Act
-            var response = await client.GetAsync(url);
+            using var response = await client.GetAsync(url);
 
             // Assert
             Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
@@ -98,10 +98,10 @@ namespace AspNetCoreTests.IntegrationTests
         {
             // Arrange
             var provider = TestClaimsProvider.WithAdminClaims();
-            var client = Factory.CreateClientWithTestAuth(provider);
+            using var client = Factory.CreateClientWithTestAuth(provider);
 
             // Act
-            var response = await client.GetAsync(url);
+            using var response = await client.GetAsync(url);
 
             // Assert
             response.EnsureSuccessStatusCode();

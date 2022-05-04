@@ -18,10 +18,10 @@ namespace AspNetCoreTests.IntegrationTests
         {
             // Arrange
             var claimsProvider = TestClaimsProvider.WithAdminClaims();
-            var client = Factory.CreateClientWithTestAuth(claimsProvider);
+            using var client = Factory.CreateClientWithTestAuth(claimsProvider);
             
             // Act
-            var response = await client.GetAsync(url);
+            using var response = await client.GetAsync(url);
 
             // Assert
             response.EnsureSuccessStatusCode();
@@ -33,10 +33,10 @@ namespace AspNetCoreTests.IntegrationTests
         public async Task Get_AnonymousCanAccessPrivacy(string url)
         {
             // Arrange
-            var client = Factory.CreateClient();
+            using var client = Factory.CreateClient();
 
             // Act
-            var response = await client.GetAsync(url);
+            using var response = await client.GetAsync(url);
 
             // Assert
             response.EnsureSuccessStatusCode();

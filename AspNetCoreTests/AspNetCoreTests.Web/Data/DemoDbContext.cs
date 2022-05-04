@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCoreTests.Web.Data
 {
-    public class DemoDbContext : DbContext
+    public class DemoDbContext : IdentityDbContext<IdentityUser>
     {
         public DemoDbContext(DbContextOptions<DemoDbContext> options) : base(options)
         {
