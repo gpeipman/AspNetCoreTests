@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using AspNetCoreTests.Web.Data;
 using AspNetCoreTests.Web.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace AspNetCoreTests.Web
 {
+    [ExcludeFromCodeCoverage]
     public class Startup
     {
         public Startup(IConfiguration configuration)
