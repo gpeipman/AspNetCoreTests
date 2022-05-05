@@ -1,10 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using AspNetCoreTests.Web.Data;
+using AspNetCoreTests.Web.Extensions;
 using AspNetCoreTests.Web.Services;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -31,20 +31,13 @@ namespace AspNetCoreTests.Web
             });
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                    .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<DemoDbContext>();
 
-            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            //        .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
-            //            options =>
-            //            {
-            //                options.LoginPath = new PathString("/auth/login");
-            //                options.AccessDeniedPath = new PathString("/auth/denied");
-            //            });
-
-            services.AddAuthorization();
             services.AddRazorPages();
             services.AddControllersWithViews();
 
+            services.AddScoped<IClaimsTransformation, AddRolesClaimsTransformation>();
             services.AddScoped<ICustomerService, CustomerService>();
         }
 

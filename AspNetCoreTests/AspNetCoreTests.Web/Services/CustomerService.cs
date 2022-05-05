@@ -46,5 +46,24 @@ namespace AspNetCoreTests.Web.Services
                                      })
                                      .ToListAsync();
         }
+
+        public async Task SaveCustomer(CustomerModel model)
+        {
+            var customer = new Customer();
+            if(model.Id != 0)
+            {
+                customer = await _dataContext.Customers.FirstOrDefaultAsync(c => c.Id == model.Id);
+            }
+            else
+            {
+                await _dataContext.Customers.AddAsync(customer);
+            }
+
+            customer.Address = model.Address;
+            customer.Email = model.Email;
+            customer.Name = model.Name;
+
+            await _dataContext.SaveChangesAsync();
+        }
     }
 }

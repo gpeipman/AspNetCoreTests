@@ -1,5 +1,15 @@
-﻿@*
+﻿@model CustomerModel
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
+<div class="row">
+<form>
+
+    <div class="form-group">
+        <label asp-for="Name">Name</label>
+        <input type="text" asp-for="Name" class="form-control" />
+    </div>
+</form>
+</div>

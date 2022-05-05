@@ -2,6 +2,12 @@
 
 <h1>Customers</h1>
 
+<div class="row">
+    <div class="col-12">
+        <p><a asp-controller="Customers" asp-action="Create" class="btn btn-primary">Add new</a></p>
+    </div>
+</div>
+
 <table class="table table-bordered">
     <thead>
         <tr>
@@ -9,6 +15,7 @@
             <th>Name</th>
             <th>Address</th>
             <th>E-mail</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -19,6 +26,9 @@
                 <td>@customer.Name</td>
                 <td>@customer.Address</td>
                 <td>@customer.Email</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@customer.Id" class="btn btn-primary">Edit</a>
+                </td>
             </tr>
         }
     </tbody>
