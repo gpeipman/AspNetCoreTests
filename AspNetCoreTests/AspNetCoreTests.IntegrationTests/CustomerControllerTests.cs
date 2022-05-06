@@ -3,7 +3,6 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using AspNetCoreTests.Web;
-using AspNetCoreTests.Web.Data;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
 
@@ -44,7 +43,7 @@ namespace AspNetCoreTests.IntegrationTests
             using var client = Factory.CreateClientWithTestAuth(claimsProvider);
             
             var formValues = new Dictionary<string, string>();
-            formValues.Add("Id", "121");
+            formValues.Add("Id", "1");
             formValues.Add("Address", "Hobujaama 1");
             formValues.Add("Name", "John Smith");
             formValues.Add("Email", "john@example.com");

@@ -41,7 +41,7 @@ namespace AspNetCoreTests.IntegrationTests
             services.AddScoped<ICustomerService, CustomerService>();
         }
         
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
             app.UseStaticFiles();
             app.UseRouting();
