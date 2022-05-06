@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using AspNetCoreTests.Web;
+using AspNetCoreTests.Web.Data;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
 
