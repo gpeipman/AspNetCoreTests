@@ -1,3 +1,5 @@
+[![.NET](https://github.com/nddash/AspNetCoreTests/actions/workflows/dotnet.yml/badge.svg)](https://github.com/nddash/AspNetCoreTests/actions/workflows/dotnet.yml)
+
 # AspNetCoreTests
 
 This project is ASP.NET Core application to demonstrate my work on ASP.NET Core unit and integration tests. 
